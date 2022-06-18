@@ -9,6 +9,6 @@ docker create \
   --name=MongoDB\
   --restart unless-stopped \
   --memory="100m" \
-  prometheus:mongodb
+  mongodb:latest
   
 docker start MongoDB
