@@ -1,5 +1,3 @@
-# ![Logo](docs/leaf.svg) MongoDB README
-
 Welcome to MongoDB!
 
 ## Components
