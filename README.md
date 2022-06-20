@@ -1,177 +1,108 @@
-# TODO
+# ![Logo](docs/leaf.svg) MongoDB README
+
+Welcome to MongoDB!
+
+## Components
+
+  - `mongod` - The database server.
+  - `mongos` - Sharding router.
+  - `mongo`  - The database shell (uses interactive javascript).
+
+## Utilities
+
+  `install_compass` - Installs MongoDB Compass for your platform.
+
+## Bulding
+
+```shell
+git clone https://github.com/Dofamin/MongoDB-Docker.git /srv/MongoDB/
+
+docker build . --tag mongodb
+
+docker rm -f MongoDB
+
+docker create \
+  --name=MongoDB \
+  -v /srv/MongoDB/logs/:/var/log/mongodb \
+  -v /srv/MongoDB/data/:/data/db \
+  -v /srv/MongoDB/conf/:/srv/MongoDB/conf \
+  -p 27017:27017 \
+  --restart unless-stopped \
+  --memory="100m" \
+  mongodb:latest
+  
+docker start MongoDB
+
+```
+
+Or just pull from GitHub
+
+```shell
+docker pull ghcr.io/dofamin/mongodb-docker:main
+
+docker rm -f MongoDB
+
+docker create \
+  --name=MongoDB \
+  -v /srv/MongoDB/logs/:/var/log/mongodb \
+  -v /srv/MongoDB/data/:/data/db \
+  -v /srv/MongoDB/conf/:/srv/MongoDB/conf \
+  -p 27017:27017 \
+  --restart unless-stopped \
+  --memory="100m" \
+  mongodb:latest
+  
+docker start MongoDB
+
+```
+
+## Installing Compass
+
+  You can install compass using the `install_compass` script packaged with MongoDB:
+
+  ```bash
+    $ ./install_compass
+  ```
+
+  This will download the appropriate MongoDB Compass package for your platform
+  and install it.
+
+## Drivers
+
+  Client drivers for most programming languages are available at
+  https://docs.mongodb.com/manual/applications/drivers/. Use the shell
+  (`mongo`) for administrative tasks.
+
+## Bug Reports
+
+  See https://github.com/mongodb/mongo/wiki/Submit-Bug-Reports.
 
 
-Options:
-  --networkMessageCompressors arg (=snappy,zstd,zlib)
-                                        Comma-separated list of compressors to 
-                                        use for network messages
+## Documentation
 
-General options:
-  -h [ --help ]                         Show this usage information
-  --version                             Show version information
-  -f [ --config ] arg                   Configuration file specifying 
-                                        additional options
-  --configExpand arg                    Process expansion directives in config 
-                                        file (none, exec, rest)
-  --port arg                            Specify port number - 27017 by default
-  --ipv6                                Enable IPv6 support (disabled by 
-                                        default)
-  --listenBacklog arg (=4096)           Set socket listen backlog size
-  --maxConns arg (=1000000)             Max number of simultaneous connections
-  --pidfilepath arg                     Full path to pidfile (if not set, no 
-                                        pidfile is created)
-  --timeZoneInfo arg                    Full path to time zone info directory, 
-                                        e.g. /usr/share/zoneinfo
-  --nounixsocket                        Disable listening on unix sockets
-  --unixSocketPrefix arg                Alternative directory for UNIX domain 
-                                        sockets (defaults to /tmp)
-  --filePermissions arg                 Permissions to set on UNIX domain 
-                                        socket file - 0700 by default
-  --fork                                Fork server process
-  -v [ --verbose ] [=arg(=v)]           Be more verbose (include multiple times
-                                        for more verbosity e.g. -vvvvv)
-  --quiet                               Quieter output
-  --logpath arg                         Log file to send write to instead of 
-                                        stdout - has to be a file, not 
-                                        directory
-  --syslog                              Log to system's syslog facility instead
-                                        of file or stdout
-  --syslogFacility arg                  syslog facility used for mongodb syslog
-                                        message
-  --logappend                           Append to logpath instead of 
-                                        over-writing
-  --logRotate arg                       Set the log rotation behavior 
-                                        (rename|reopen)
-  --timeStampFormat arg                 Desired format for timestamps in log 
-                                        messages. One of iso8601-utc or 
-                                        iso8601-local
-  --setParameter arg                    Set a configurable parameter
-  --bind_ip arg                         Comma separated list of ip addresses to
-                                        listen on - localhost by default
-  --bind_ip_all                         Bind to all ip addresses
-  --noauth                              Run without security
-  --transitionToAuth                    For rolling access control upgrade. 
-                                        Attempt to authenticate over outgoing 
-                                        connections and proceed regardless of 
-                                        success. Accept incoming connections 
-                                        with or without authentication.
-  --slowms arg (=100)                   Value of slow for profile and console 
-                                        log
-  --slowOpSampleRate arg (=1)           Fraction of slow ops to include in the 
-                                        profile and console log
-  --profileFilter arg                   Query predicate to control which 
-                                        operations are logged and profiled
-  --auth                                Run with security
-  --clusterIpSourceAllowlist arg        Network CIDR specification of permitted
-                                        origin for `__system` access
-  --profile arg                         0=off 1=slow, 2=all
-  --cpu                                 Periodically show cpu and iowait 
-                                        utilization
-  --sysinfo                             Print some diagnostic system 
-                                        information
-  --noscripting                         Disable scripting engine
-  --notablescan                         Do not allow table scans
-  --shutdown                            Kill a running server (for init 
-                                        scripts)
-  --keyFile arg                         Private key for cluster authentication
-  --clusterAuthMode arg                 Authentication mode used for cluster 
-                                        authentication. Alternatives are 
-                                        (keyFile|sendKeyFile|sendX509|x509)
+  https://docs.mongodb.com/manual/
 
-Replication options:
-  --oplogSize arg                       Size to use (in MB) for replication op 
-                                        log. default is 5% of disk space (i.e. 
-                                        large is good)
+## Forums
 
-Replica set options:
-  --replSet arg                         arg is <setname>[/<optionalseedhostlist
-                                        >]
-  --enableMajorityReadConcern [=arg(=1)] (=1)
-                                        Enables majority readConcern. 
-                                        enableMajorityReadConcern=false is no 
-                                        longer supported
+  - https://community.mongodb.com
 
-Sharding options:
-  --configsvr                           Declare this is a config db of a 
-                                        cluster; default port 27019; default 
-                                        dir /data/configdb
-  --shardsvr                            Declare this is a shard db of a 
-                                        cluster; default port 27018
+      Technical questions about using MongoDB.
 
-Storage options:
-  --storageEngine arg                   What storage engine to use - defaults 
-                                        to wiredTiger if no data files present
-  --dbpath arg                          Directory for datafiles - defaults to 
-                                        /data/db
-  --directoryperdb                      Each database will be stored in a 
-                                        separate directory
-  --syncdelay arg (=60)                 Seconds between disk syncs
-  --journalCommitInterval arg (=100)    how often to group/batch commit (ms)
-  --upgrade                             Upgrade db if needed
-  --repair                              Run repair on all dbs
-  --journal                             Enable journaling
-  --nojournal                           Disable journaling (journaling is on by
-                                        default for 64 bit)
-  --oplogMinRetentionHours arg (=0)     Minimum number of hours to preserve in 
-                                        the oplog. Default is 0 (turned off). 
-                                        Fractions are allowed (e.g. 1.5 hours)
+  - https://community.mongodb.com/c/server-dev
 
-AWS IAM Options:
-  --awsIamSessionToken arg              AWS Session Token for temporary 
-                                        credentials
+      Technical questions about building and developing MongoDB.
 
-WiredTiger options:
-  --wiredTigerCacheSizeGB arg           Maximum amount of memory to allocate 
-                                        for cache; Defaults to 1/2 of physical 
-                                        RAM
-  --zstdDefaultCompressionLevel arg (=6)
-                                        Default compression level for zstandard
-                                        compressor
-  --wiredTigerJournalCompressor arg (=snappy)
-                                        Use a compressor for log records 
-                                        [none|snappy|zlib|zstd]
-  --wiredTigerDirectoryForIndexes       Put indexes and data in different 
-                                        directories
-  --wiredTigerCollectionBlockCompressor arg (=snappy)
-                                        Block compression algorithm for 
-                                        collection data [none|snappy|zlib|zstd]
-  --wiredTigerIndexPrefixCompression arg (=1)
-                                        Use prefix compression on row-store 
-                                        leaf pages
+## Learn MongoDB
 
-TLS Options:
-  --tlsOnNormalPorts                    Use TLS on configured ports
-  --tlsMode arg                         Set the TLS operation mode 
-                                        (disabled|allowTLS|preferTLS|requireTLS
-                                        )
-  --tlsCertificateKeyFile arg           Certificate and key file for TLS
-  --tlsCertificateKeyFilePassword arg   Password to unlock key in the TLS 
-                                        certificate key file
-  --tlsClusterFile arg                  Key file for internal TLS 
-                                        authentication
-  --tlsClusterPassword arg              Internal authentication key file 
-                                        password
-  --tlsCAFile arg                       Certificate Authority file for TLS
-  --tlsClusterCAFile arg                CA used for verifying remotes during 
-                                        inbound connections
-  --tlsCRLFile arg                      Certificate Revocation List file for 
-                                        TLS
-  --tlsDisabledProtocols arg            Comma separated list of TLS protocols 
-                                        to disable [TLS1_0,TLS1_1,TLS1_2,TLS1_3
-                                        ]
-  --tlsAllowConnectionsWithoutCertificates 
-                                        Allow client to connect without 
-                                        presenting a certificate
-  --tlsAllowInvalidHostnames            Allow server certificates to provide 
-                                        non-matching hostnames
-  --tlsAllowInvalidCertificates         Allow connections to servers with 
-                                        invalid certificates
-  --tlsFIPSMode                         Activate FIPS 140-2 mode at startup
-  --tlsLogVersions arg                  Comma separated list of TLS protocols 
-                                        to log on connect [TLS1_0,TLS1_1,TLS1_2
-                                        ,TLS1_3]
+  https://university.mongodb.com/
 
-Free Monitoring Options:
-  --enableFreeMonitoring arg            Enable Cloud Free Monitoring 
-                                        (on|runtime|off)
-  --freeMonitoringTag arg               Cloud Free Monitoring Tags
+## LICENSE
+
+  MongoDB is free and the source is available. Versions released prior to
+  October 16, 2018 are published under the AGPL. All versions released after
+  October 16, 2018, including patch fixes for prior versions, are published
+  under the [Server Side Public License (SSPL) v1](LICENSE-Community.txt).
+  See individual files for details.
+
+
+#### [Official MongoDB GitHub Repository](https://github.com/mongodb/mongo)
