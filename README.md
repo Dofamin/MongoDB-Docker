@@ -22,7 +22,7 @@ docker rm -f MongoDB
 docker create \
   --name=MongoDB \
   -v /srv/MongoDB/logs/:/var/log/mongodb \
-  -v /srv/MongoDB/data/:/data/db \
+  -v /srv/MongoDB/data/:/var/lib/mongodb \
   -v /srv/MongoDB/conf/:/srv/MongoDB/conf \
   -p 27017:27017 \
   --restart unless-stopped \
@@ -43,7 +43,7 @@ docker rm -f MongoDB
 docker create \
   --name=MongoDB \
   -v /srv/MongoDB/logs/:/var/log/mongodb \
-  -v /srv/MongoDB/data/:/data/db \
+  -v /srv/MongoDB/data/:/var/lib/mongodb \
   -v /srv/MongoDB/conf/:/srv/MongoDB/conf \
   -p 27017:27017 \
   --restart unless-stopped \
